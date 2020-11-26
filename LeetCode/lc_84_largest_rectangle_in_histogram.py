@@ -3,6 +3,7 @@ import numpy as np
 
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
+        """brutal force, double for loop to calculate every possible range."""
         n = len(heights)
         if n == 0:
             return 0
@@ -18,6 +19,7 @@ class Solution:
 
 class Solution2:
     def largestRectangleArea(self, heights: List[int]) -> int:
+        """brutal force, for each bar search it's left and right."""
         size = len(heights)
         res = 0
 
@@ -36,10 +38,30 @@ class Solution2:
         return res
 
 
+class Solution3:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        """mono-stack"""
+        if len(heights) == 1 and heights[0] == 0:
+            return 0
+        heights = [0] + heights + [0]  # sentinel
+        n = len(heights)
+        if n == 2:
+            return 0
+        max_area = 0
+        stack = [0]  # stack stores index (position) rather than height value.
+        for i in range(1, n):
+            while heights[i] < heights[stack[-1]]:
+                cur_height = heights[stack.pop()]
+                cur_width = i - stack[-1] - 1  # stack[-1] is the new top of stack
+                max_area = max(max_area, cur_height * cur_width)
+            stack.append(i)
+        return max_area
+
+
 if __name__ == "__main__":
     import time
     t0 = time.time()
-    print(Solution2().largestRectangleArea(list(range(1, 10000))))
+    print(Solution3().largestRectangleArea(list(range(1, 10000))))
     # print(Solution().largestRectangleArea([6]))
     # print(Solution().largestRectangleArea(np.random.randint(10, size=10) + 1))
     print(f"elapsed time: {time.time() - t0:.2f}")
