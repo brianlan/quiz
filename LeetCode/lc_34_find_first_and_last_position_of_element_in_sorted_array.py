@@ -40,5 +40,5 @@ if __name__ == "__main__":
     # nums, target = [0, 1, 1, 1, 6, 9, 9, 10, 12, 14], 0
     # nums, target = [1, 1, 4, 4, 5, 7, 7, 11, 11, 12], 4
     print(f"{nums}, {target}")
-    print(Solution2().searchRange(nums, target))
+    print(Solution().searchRange(nums, target))
 
