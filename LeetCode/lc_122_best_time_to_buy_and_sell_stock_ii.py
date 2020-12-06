@@ -21,5 +21,6 @@ class Solution:
 
 if __name__ == "__main__":
     # input = [7,6,4,3,1]
-    input = np.random.randint(20, size=10).tolist()
+    input = [3, 2, 6, 5, 0, 3]
+    # input = np.random.randint(20, size=10).tolist()
     logger.info(Solution().maxProfit(input))
