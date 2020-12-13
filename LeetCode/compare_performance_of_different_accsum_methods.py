@@ -43,8 +43,20 @@ def functools_accumulate(nums):
     return list(accumulate(nums))
 
 
+def accsum_generator(nums):
+    total = 0
+    for i in nums:
+        total += i
+        yield total
+
+
+@measure
+def generator(nums):
+    return list(accsum_generator(nums))
+
+
 if __name__ == "__main__":
-    players = [forloop, use_reduce, numpy_cumsum, functools_accumulate]
+    players = [forloop, use_reduce, numpy_cumsum, functools_accumulate, generator]
     nums = np.random.randint(100, size=10000).tolist()
     gt = np.cumsum(nums).tolist()
     for func in players:
