@@ -1,6 +1,7 @@
 from typing import List
 import numpy as np
 
+
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
         """brutal force, double for loop to calculate every possible range."""
@@ -60,8 +61,12 @@ class Solution3:
 
 if __name__ == "__main__":
     import time
+
     t0 = time.time()
-    print(Solution3().largestRectangleArea(list(range(1, 10000))))
+    # heights = list(range(1, 10000))
+    # heights = np.random.randint(10, size=10) + 1
+    heights = [5, 7, 5, 8, 3, 2, 10, 2, 7, 8]
     # print(Solution().largestRectangleArea([6]))
-    # print(Solution().largestRectangleArea(np.random.randint(10, size=10) + 1))
+    print(heights)
+    print(Solution3().largestRectangleArea(heights))
     print(f"elapsed time: {time.time() - t0:.2f}")
