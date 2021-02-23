@@ -4,6 +4,7 @@ from itertools import accumulate
 import time
 import numpy as np
 from loguru import logger
+from math import inf
 
 
 def measure(func):

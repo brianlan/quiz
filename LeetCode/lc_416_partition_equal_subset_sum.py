@@ -19,14 +19,21 @@ class Solution:
             return False
         capacity = tot // 2
         dp = [[-inf] * (capacity + 1) for i in range(n)]
+
+        # initialization
         for i in range(n):
             dp[i][0] = 0
-        for j in range(1, capacity + 1):
-            dp[0][j] = 0 if nums[0] > j else nums[0]
+        # for j in range(1, capacity + 1):
+        #     dp[0][j] = 0 if nums[0] > j else nums[0]
+
+        # dp
         for i in range(1, n):
             cost = value = nums[i]
-            for j in range(cost, capacity + 1):
-                dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - cost] + value)
+            for j in range(capacity + 1):
+                if cost > j:
+                    dp[i][j] = dp[i - 1][j]
+                else:
+                    dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - cost] + value)
         logger.debug(f"\n{np.array(dp)}")
         return dp[-1][-1] == capacity
 
