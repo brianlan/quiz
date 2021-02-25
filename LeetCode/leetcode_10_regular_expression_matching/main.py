@@ -1,3 +1,5 @@
+from loguru import logger
+
 """
 10. 正则表达式匹配
 给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 '.' 和 '*' 的正则表达式匹配。
@@ -61,6 +63,7 @@ class Solution:
             i += 1
         if p[-1] != "*":
             pattern.append(p[-1])
+        logger.debug(f"\n{pattern}")
         match = [[False] * (len(pattern) + 1) for _ in range((len(s) + 1))]
         match[0][0] = True
         for i in range(0, len(s) + 1):
@@ -83,14 +86,14 @@ class Solution:
 
 
 if __name__ == "__main__":
-    assert not Solution().isMatch("a", "ab*a")
+    # assert not Solution().isMatch("a", "ab*a")
     assert Solution().isMatch("mississippi", "mis*i*sj*.*p*i*p*")
-    assert not Solution().isMatch("", ".")
-    assert Solution().isMatch("", "")
-    assert Solution().isMatch("", ".*")
-    assert not Solution().isMatch("a", "")
-    assert not Solution().isMatch("aa", "a")
-    assert Solution().isMatch("aa", "a*")
-    assert Solution().isMatch("ab", ".*")
-    assert Solution().isMatch("aab", "c*a*b")
-    assert not Solution().isMatch("mississippi", "mis*is*p*.")
+    # assert not Solution().isMatch("", ".")
+    # assert Solution().isMatch("", "")
+    # assert Solution().isMatch("", ".*")
+    # assert not Solution().isMatch("a", "")
+    # assert not Solution().isMatch("aa", "a")
+    # assert Solution().isMatch("aa", "a*")
+    # assert Solution().isMatch("ab", ".*")
+    # assert Solution().isMatch("aab", "c*a*b")
+    # assert not Solution().isMatch("mississippi", "mis*is*p*.")
