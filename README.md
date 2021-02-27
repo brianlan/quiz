@@ -40,6 +40,14 @@
 * Game DP
 * 背包问题
 
+## Hash
+
+pass
+
+# 巴普洛夫联想
+
+* 见到连续子数组的和，一定要想到presum，因为`sum(nums[i:j])`等价于`presum[j] - presum[i]`
+
 # 对Leetcode算法题的看法
 
 * 在Leetcode中重要的是思想，而代码只不过是辅助用来实现思想的工具而已。要写真正好的程序，需要考虑的东西很多，远远不是Leetcode做得好就代表了编程编得好。
