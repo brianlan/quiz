@@ -4,7 +4,7 @@ from itertools import accumulate
 import time
 import numpy as np
 from loguru import logger
-from math import inf
+from math import inf, log2, floor
 
 
 class TreeNode:
@@ -29,7 +29,7 @@ def measure(func):
     return wrapper
 
 
-def create_linked_list(nums):
+def create_linked_list(nums: List) -> ListNode:
     if len(nums) == 0:
         return None
     head = ListNode(nums[0])
@@ -40,10 +40,38 @@ def create_linked_list(nums):
     return head
 
 
-def linked_list_to_nums(head):
+def linked_list_to_nums(head) -> List:
     nums = []
     p = head
     while p is not None:
         nums.append(p.val)
         p = p.next
     return nums
+
+
+def create_binary_tree(nums: List) -> TreeNode:
+    tot = len(nums)
+    if tot == 0:
+        return None
+    # depth = floor(log2(tot)) + 1
+    nodes = [None if num is None else TreeNode(num) for num in nums]
+    for n in range(tot):
+        if nodes[n] is None:
+            continue
+        d = floor(log2(n + 1))  # depth id
+        j = n + 1 - 2 ** d  # pos id in i-th layer
+        right_id = 2 ** (d + 1) + 2 * j
+        left_id = right_id - 1
+        try:
+            nodes[n].right = nodes[right_id]
+        except IndexError:
+            pass
+        try:
+            nodes[n].left = nodes[left_id]
+        except IndexError:
+            pass
+    return nodes[0]
+
+
+def binary_tree_to_nums(root: TreeNode) -> List:
+    pass
