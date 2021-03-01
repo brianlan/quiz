@@ -7,6 +7,13 @@ from loguru import logger
 from math import inf
 
 
+class TreeNode:
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
 class ListNode:
     def __init__(self, val, next=None):
         self.val = val
