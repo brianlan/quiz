@@ -1,6 +1,7 @@
-from typing import List
+from typing import List, Tuple
 from collections import defaultdict, Counter, deque
 from itertools import accumulate
+from functools import lru_cache
 import time
 import numpy as np
 from loguru import logger
