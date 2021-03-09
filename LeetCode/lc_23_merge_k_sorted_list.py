@@ -36,20 +36,20 @@ class Solution:
         return cnt
 
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-        n = len(lists)
-        if n == 0:
+        if len(lists) == 0:
             return None
-        lists_w_len = [(l, Solution.get_list_length(l)) for l in lists]
-        lists_w_len.sort(key=lambda x: x[1])
-        lists, lengths = [deque(ele) for ele in zip(*lists_w_len)]
-        while len(lists) > 1 and len(lengths) > 1:
+        lists_w_len = [PrioritizedItem(Solution.get_list_length(l), l) for l in lists if l is not None]
+        if len(lists_w_len) == 0:
+            return None
+        heapq.heapify(lists_w_len)
+        for _ in range(len(lists_w_len) - 1):
             # logger.debug(f"\n{[linked_list_to_nums(l) for l in lists]}")
-            merged_len = lengths.popleft() + lengths.popleft()
-            pos = bisect.bisect_left(lengths, merged_len)
-            merged_two_shortest = Solution.merge_two_lists(lists.popleft(), lists.popleft())
-            lists.insert(pos, merged_two_shortest)
-            lengths.insert(pos, merged_len)
-        return lists[0]
+            a = heapq.heappop(lists_w_len)
+            b = heapq.heappop(lists_w_len)
+            merged_list = Solution.merge_two_lists(a.item, b.item)  # from two shortest
+            heapq.heappush(lists_w_len, PrioritizedItem(a.priority + b.priority, merged_list))
+        return lists_w_len[0].item
+        
 
 
 if __name__ == "__main__":
@@ -66,4 +66,5 @@ if __name__ == "__main__":
         [3, 5, 6, 7, 8, 9],
     ]
     lists = [create_linked_list(l) for l in lists]
+    lists = [None]
     logger.info(linked_list_to_nums(Solution().mergeKLists(lists)))

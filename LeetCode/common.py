@@ -1,5 +1,6 @@
 from typing import List, Tuple
 from collections import defaultdict, Counter, deque
+import heapq
 from itertools import accumulate
 from functools import lru_cache
 import bisect
@@ -7,7 +8,13 @@ import time
 import numpy as np
 from loguru import logger
 from math import inf, log2, floor
-from pprint import pprint
+from dataclasses import dataclass, field
+from typing import Any
+
+@dataclass(order=True)
+class PrioritizedItem:
+    priority: int
+    item: Any=field(compare=False)
 
 
 class TreeNode:
