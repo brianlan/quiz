@@ -10,6 +10,8 @@ from loguru import logger
 from math import inf, log2, floor
 from dataclasses import dataclass, field
 from typing import Any
+import copy
+
 
 @dataclass(order=True)
 class PrioritizedItem:
