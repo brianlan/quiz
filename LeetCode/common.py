@@ -24,6 +24,9 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+    
+    def __repr__(self):
+        return f'{self.val}'
 
 
 class ListNode:
@@ -67,21 +70,34 @@ def create_binary_tree(nums: List) -> TreeNode:
         return None
     # depth = floor(log2(tot)) + 1
     nodes = [None if num is None else TreeNode(num) for num in nums]
-    for n in range(tot):
-        if nodes[n] is None:
+    # prev_layer = nodes[:1]
+    j, k = 0, 1
+    while k < tot:
+        # num_prev_effective_nodes = sum([n is not None for n in prev_layer])
+        # num_prev_effective_nodes = sum([n is not None for n in nodes[i:k]])
+        # prev_layer_size = k - i
+        # while k < min(prev_layer_size * 2, tot):
+        # for j in range(len(prev_layer)):
+        if nodes[j] is None:
+            j += 1
             continue
-        d = floor(log2(n + 1))  # depth id
-        j = n + 1 - 2 ** d  # pos id in i-th layer
-        right_id = 2 ** (d + 1) + 2 * j
-        left_id = right_id - 1
-        try:
-            nodes[n].right = nodes[right_id]
-        except IndexError:
-            pass
-        try:
-            nodes[n].left = nodes[left_id]
-        except IndexError:
-            pass
+        else:
+        # if prev_layer[j] is not None:
+            try:
+                nodes[j].left = nodes[k]
+                k += 1
+            except IndexError:
+                nodes[j].left = None
+            
+            try:
+                nodes[j].right = nodes[k]
+                k += 1
+            except IndexError:
+                nodes[j].right = None
+        j += 1
+
+        # prev_layer = nodes[i:i+num_prev_effective_nodes * 2]
+        # i = j = j + 1
     return nodes[0]
 
 

@@ -31,8 +31,10 @@ def test_create_binary_tree_3():
     assert_tree_node(tree, 1)
     assert_tree_node(tree.left, None)
     assert_tree_node(tree.right, 2)
-    assert_tree_node(tree.right.left, None)
-    assert_tree_node(tree.right.right, 3)
+    assert_tree_node(tree.right.left, 3)
+    assert_tree_node(tree.right.right, None)
+    assert_tree_node(tree.right.left.left, None)
+    assert_tree_node(tree.right.left.right, None)
 
 
 def test_create_binary_tree_4():
@@ -52,7 +54,7 @@ def test_create_binary_tree_4():
 
     assert_tree_node(tree.left.left, 3)
     assert_tree_node(tree.left.right, None)
-    assert_tree_node(tree.left.left.left.val, -1)
+    assert_tree_node(tree.left.left.left, -1)
     assert_tree_node(tree.left.left.right, None)
     assert_tree_node(tree.left.left.left.left, None)
     assert_tree_node(tree.left.left.left.right, None)
