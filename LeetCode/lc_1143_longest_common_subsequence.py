@@ -6,6 +6,7 @@ from loguru import logger
 
 
 class Solution:
+    @profile
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
         m, n = len(text1), len(text2)
         dp = [[0] * (n + 1) for _ in range(m + 1)]
@@ -16,48 +17,34 @@ class Solution:
 
 
 class SolutionBF:
+    @profile
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
         m, n = len(text1), len(text2)
-        lcs_len = 0
-        for i in range(m):
-            cur_len = 0
-            prev_match = 0
-            p1 = i
-            p2 = 0
-            while p1 < m:
-                if text1[p1] == text2[p2]:
-                    cur_len += 1
-                    p1 += 1
-                    p2 += 1
-                    prev_match = p2
-
-                else:
-                    p2 += 1
-                    if p2 >= n:
-                        p1 += 1
-                        p2 = prev_match
-
-            lcs_len = max(lcs_len, cur_len)
-        
-        return lcs_len
+        if m == 0 or n == 0:
+            return 0
+        return max(
+            int(text1[-1] == text2[-1]) + self.longestCommonSubsequence(text1[:-1], text2[:-1]),
+            self.longestCommonSubsequence(text1, text2[:-1]),
+            self.longestCommonSubsequence(text1[:-1], text2)
+        )
 
 
 if __name__ == '__main__':
     assert SolutionBF().longestCommonSubsequence("deadbfb", "cbdfbfa") == 3
-    # assert SolutionBF().longestCommonSubsequence("abcde", "a") == 1
-    # assert SolutionBF().longestCommonSubsequence("g", "ddefg") == 1
-    # assert SolutionBF().longestCommonSubsequence("abcde", "ace") == 3
-    # assert SolutionBF().longestCommonSubsequence("abc", "abc") == 3
-    # assert SolutionBF().longestCommonSubsequence("abc", "def") == 0
+    assert SolutionBF().longestCommonSubsequence("abcde", "a") == 1
+    assert SolutionBF().longestCommonSubsequence("g", "ddefg") == 1
+    assert SolutionBF().longestCommonSubsequence("abcde", "ace") == 3
+    assert SolutionBF().longestCommonSubsequence("abc", "abc") == 3
+    assert SolutionBF().longestCommonSubsequence("abc", "def") == 0
 
-    # for _ in range(100):
-    #     text1 = ''.join([chr(random.randint(97, 97 + 5)) for _ in range(7)])
-    #     text2 = ''.join([chr(random.randint(97, 97 + 5)) for _ in range(7)])
-    #     try:
-    #         assert Solution().longestCommonSubsequence(text1, text2) == SolutionBF().longestCommonSubsequence(text1, text2)
-    #     except AssertionError:
-    #         logger.debug(text1)
-    #         logger.debug(text2)
-    #         logger.debug(Solution().longestCommonSubsequence(text1, text2))
-    #         logger.debug(SolutionBF().longestCommonSubsequence(text1, text2))
-    #         break
+    for _ in range(100):
+        text1 = ''.join([chr(random.randint(97, 97 + 5)) for _ in range(7)])
+        text2 = ''.join([chr(random.randint(97, 97 + 5)) for _ in range(7)])
+        try:
+            assert Solution().longestCommonSubsequence(text1, text2) == SolutionBF().longestCommonSubsequence(text1, text2)
+        except AssertionError:
+            logger.debug(text1)
+            logger.debug(text2)
+            logger.debug(Solution().longestCommonSubsequence(text1, text2))
+            logger.debug(SolutionBF().longestCommonSubsequence(text1, text2))
+            break
