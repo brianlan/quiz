@@ -20,15 +20,15 @@ def: longest common sequence - s1 == s2 where i_x == i_y and no longer i_x and i
 1. p and q can be iterated
 1. subsequences can be non-consecutive
 1. p has 1 + c{n, 1} + c{n, 2} + ... + c{n, n-1} subsequences while q has 1 + c{m, 1} + c{m, 2} + ... + c{m, m-1} subsequences.
+1. when finding the optimal matching between p and q, if we greedily fix one match and going on to find the next match, it will cause wrong answer, because the first match you choose would result in other better options not being hornered. 
 1. for a given subsequence, adding a new one from the rest substring (either place) would get a new subsequence.
 
 ## 3. BF解法模型 - 一种BF的思路
-for i in range(len(p)):
-    
+recursive    
 
 
 ## 4. 性能分析模型 - BF中哪个环节拖累了性能（并判断是否可优化），其他还有哪些地方是可优化的
-O(n^3)
+O(2^(m+n))
 完全没有利用之前已经判断过的子串p'和q'的最长公共子序列是什么、长度为多少
 
 ## 5. 方法库匹配模型 - 已知的某种方法（或其类似物，或变化情况），有实现思路且可实现一种新方法

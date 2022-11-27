@@ -1,4 +1,5 @@
 import math
+import random
 
 import numpy as np
 from loguru import logger
@@ -14,9 +15,49 @@ class Solution:
         return dp[-1][-1]
 
 
+class SolutionBF:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        m, n = len(text1), len(text2)
+        lcs_len = 0
+        for i in range(m):
+            cur_len = 0
+            prev_match = 0
+            p1 = i
+            p2 = 0
+            while p1 < m:
+                if text1[p1] == text2[p2]:
+                    cur_len += 1
+                    p1 += 1
+                    p2 += 1
+                    prev_match = p2
+
+                else:
+                    p2 += 1
+                    if p2 >= n:
+                        p1 += 1
+                        p2 = prev_match
+
+            lcs_len = max(lcs_len, cur_len)
+        
+        return lcs_len
+
+
 if __name__ == '__main__':
-    assert Solution().longestCommonSubsequence("abcde", "a") == 1
-    assert Solution().longestCommonSubsequence("g", "ddefg") == 1
-    assert Solution().longestCommonSubsequence("abcde", "ace") == 3
-    assert Solution().longestCommonSubsequence("abc", "abc") == 3
-    assert Solution().longestCommonSubsequence("abc", "def") == 0
+    assert SolutionBF().longestCommonSubsequence("deadbfb", "cbdfbfa") == 3
+    # assert SolutionBF().longestCommonSubsequence("abcde", "a") == 1
+    # assert SolutionBF().longestCommonSubsequence("g", "ddefg") == 1
+    # assert SolutionBF().longestCommonSubsequence("abcde", "ace") == 3
+    # assert SolutionBF().longestCommonSubsequence("abc", "abc") == 3
+    # assert SolutionBF().longestCommonSubsequence("abc", "def") == 0
+
+    # for _ in range(100):
+    #     text1 = ''.join([chr(random.randint(97, 97 + 5)) for _ in range(7)])
+    #     text2 = ''.join([chr(random.randint(97, 97 + 5)) for _ in range(7)])
+    #     try:
+    #         assert Solution().longestCommonSubsequence(text1, text2) == SolutionBF().longestCommonSubsequence(text1, text2)
+    #     except AssertionError:
+    #         logger.debug(text1)
+    #         logger.debug(text2)
+    #         logger.debug(Solution().longestCommonSubsequence(text1, text2))
+    #         logger.debug(SolutionBF().longestCommonSubsequence(text1, text2))
+    #         break
