@@ -1,12 +1,12 @@
 import math
 import random
+from functools import lru_cache
 
 import numpy as np
 from loguru import logger
 
 
 class Solution:
-    @profile
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
         m, n = len(text1), len(text2)
         dp = [[0] * (n + 1) for _ in range(m + 1)]
@@ -17,7 +17,7 @@ class Solution:
 
 
 class SolutionBF:
-    @profile
+    @lru_cache(maxsize=None)
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
         m, n = len(text1), len(text2)
         if m == 0 or n == 0:
