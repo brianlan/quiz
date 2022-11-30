@@ -81,22 +81,47 @@ F(n) = F(n - 1) + F(n - 2)
 要符合「最优子结构」，子问题间必须互相独立
 
 #d 最优子结构的定义
+算法导论：如果一个问题的最优解包含其子问题的最优解，我们就称此问题具有最优子结构
+如果用"白"一点的话说。定义一个问题 Ｑ，求目标解 Ａ。如果我们找出的目标解 A 的同时， Q 的子问题的目标解同时也被找到，那么称问题 Ｑ 具有最优子结构。
+
+#e 和最大的路径 最优子结构的定义
+下面是一个地图，我们要找一条从左下角（起点）到右上角（终点）、只向右和向上走的路径。
+
+<img src="https://picx.zhimg.com/50/v2-4cc436c57c1505b1bbe8fa536db7bede_720w.jpg?source=1940ef5c" data-caption="" data-size="normal" data-rawwidth="88" data-rawheight="77" class="content_image" width="88"/>
+
+如果要让路径经过的数字总和最大，那么最优路径是下面这条：
+
+<img src="https://pica.zhimg.com/50/v2-12aa22f2e3b094ba1fb6f6a148be165d_720w.jpg?source=1940ef5c" data-caption="" data-size="normal" data-rawwidth="88" data-rawheight="77" class="content_image" width="88"/>
+
+作者：王赟 Maigo
+链接：https://www.zhihu.com/question/52165201/answer/288025858
+
+可以验证，对于最优路径上的任意一点，最优路径从起点到该点的部分，也正是从起点到该点的所有路径中数字总和最大的那一条。这就叫「满足最优子结构」。
+
+#e 绝对值和最小的路径 最优子结构的定义
+
+现在换一个「最优」的标准，要求路径经过的数字总和的绝对值最小。那么最优路径是下面这条：
+
+<img src="https://picx.zhimg.com/50/v2-e25d6e4d7cd17287c5f1f3708a872e5a_720w.jpg?source=1940ef5c" data-caption="" data-size="normal" data-rawwidth="88" data-rawheight="77" class="content_image" width="88"/>
+
+但是，对于最优路径上 -4 这个点，最优路径从起点到该点的部分，却不是从起点到该点的所有路径中，数字总和的绝对值最小的那一条，因为下面这条路径上数字总和的绝对值更小：
+
+<img src="https://picx.zhimg.com/50/v2-478bca87eccd0d812ecea954339e851d_720w.jpg?source=1940ef5c" data-caption="" data-size="normal" data-rawwidth="88" data-rawheight="77" class="content_image" width="88"/>
+
+这就叫「不满足最优子结构」。
+
+作者：王赟 Maigo
+链接：https://www.zhihu.com/question/52165201/answer/288025858
+
+#e 不具备最优子结构 最优子结构的定义
+绝对值，模值这种的目标函数就不具有最优子结构。
 
 #d 什么是最优
+最优指的是题目要求我们求得某个问题或者子问题的最大值、最小值之类的。
 
 #e Fibonacci不具备 什么是最优
 The example of the Fibonacci sequence is not strictly a dynamic programming because it does not involve finding the optimal value
 
-#d 什么是子结构
-
-#d 什么是最优子结构
-~~ 通常一个可以用动态规划来解决的问题都有被称作为“最优子结构”的特性。~~
-
-#e XXX 什么是最优子结构
-
-#d 最优解包含性
-
-#e YYY 最优解包含性
 
 ## 总结
 
@@ -104,5 +129,5 @@ The example of the Fibonacci sequence is not strictly a dynamic programming beca
 状态转移方程、重叠子问题和最优子结构是DP的核心要素。但是这三者之间并不是完全独立无关的，而是相互交织在一起。因此，在面对一个新问题的时候，往往需要我们能够仔细地分辨和分析出他们分别是什么。
 
 #d 可递归性
-这种特性一定可以被递归的定义出来，也就是说一个题目可以被DP解决，那也一定可以被递归解决，只不过效率上可能存在很大差异（看是否有重复计算）。
+这种与决策有一定关系、寻找最优解的题目，通常其核心点在于找到状态转移方程，而状态转移方程一般可以被递归的方式来实现，也就是说这类可以被DP解决的问题，也一定可以被递归解决，只不过效率上可能存在很大差异（看是否有重复计算）。
 通过cache住已经算过的结果，可以显著提升性能（通常被称为带备忘录的递归）。
