@@ -1,5 +1,5 @@
 import pytest
-from LeetCode.data_structures.queue import MinMaxQueue
+from LeetCode.data_structures import MinMaxQueue
 
 def test_max_queue_append_pop():
     queue = MinMaxQueue(type="max")
