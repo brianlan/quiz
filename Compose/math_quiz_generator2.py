@@ -14,7 +14,7 @@ parser.add_argument("-o", "--output-path", type=Path)
 parser.add_argument("-s", "--seconds-per-quiz", type=float, default=8)
 parser.add_argument("--play-sound", action="store_true", default=False)
 parser.add_argument("--sound-file-suffix", default="m4a")
-parser.add_argument("--sound-dir", default=Path('/Users/rlan/projects/quiz/assets/sound'))
+parser.add_argument("--sound-dir", default='/Users/rlan/projects/quiz/assets/sound', type=Path)
 parser.add_argument("--show-result", default=False, action="store_true")
 
 
