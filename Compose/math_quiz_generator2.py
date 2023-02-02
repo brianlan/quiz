@@ -94,10 +94,6 @@ def generate_quiz(num_operands, max_val=20):
     return quiz
 
 
-def validate_math_expr(quiz, thresh_lo=0, thresh_hi=20):
-    return thresh_lo <= quiz.result <= thresh_hi
-
-
 def play(sound_dir, elements, interval=0.4, suffix="m4a"):
     for ele in elements:
         time.sleep(interval)
