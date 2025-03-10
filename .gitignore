@@ -119,3 +119,4 @@ dmypy.json
 
 # line profiler
 *.lprof
+bin
