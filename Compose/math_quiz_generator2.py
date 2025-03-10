@@ -16,6 +16,9 @@ parser.add_argument("--play-sound", action="store_true", default=False)
 parser.add_argument("--sound-file-suffix", default="m4a")
 parser.add_argument("--sound-dir", default='/Users/rlan/projects/quiz/assets/sound', type=Path)
 parser.add_argument("--show-result", default=False, action="store_true")
+parser.add_argument("--available-operands", nargs="+", type=str, required=True)
+parser.add_argument("--thresh-lo", default=2, type=float)
+parser.add_argument("--thresh-hi", default=20, type=float)
 
 
 class MathExpressionNotMeetRequirement(Exception):
@@ -57,7 +60,7 @@ def main(args):
     prev_len = len(quizzes)
     while len(quizzes) < args.num_quizzes:
         try:
-            quiz = generate_quiz(args.num_operands)
+            quiz = generate_quiz(args.num_operands, args.available_operands, thresh_lo=args.thresh_lo, thresh_hi=args.thresh_hi)
         except MathExpressionNotMeetRequirement:
             continue
         quizzes.add(quiz)
@@ -78,17 +81,17 @@ def main(args):
             f.write('\n'.join([str(q) for q in quizzes]))
 
 
-def generate_quiz(num_operands, max_val=20):
-    ops = ['+'] + np.random.choice(['-', '+'], size=num_operands - 1, replace=True).tolist()
+def generate_quiz(num_operands, available_operands, thresh_lo, thresh_hi, max_val=20):
+    ops = ['+'] + np.random.choice(available_operands, size=num_operands - 1, replace=True).tolist()
     numbers = np.random.randint(1, max_val + 1, size=num_operands).tolist()
 
     for i in range(len(numbers) - 1):
         partial_quiz = Quiz(numbers[i:i+2], ops[i:i+2])
-        if not partial_quiz.is_valid(thresh_lo=2, thresh_hi=20):
+        if not partial_quiz.is_valid(thresh_lo=thresh_lo, thresh_hi=thresh_hi):
             raise MathExpressionNotMeetRequirement(f"{partial_quiz} doesn't meet the requirement.")
     
     quiz = Quiz(numbers, ops)
-    if not quiz.is_valid(thresh_lo=0, thresh_hi=20):
+    if not quiz.is_valid(thresh_lo=thresh_lo, thresh_hi=thresh_hi):
         raise MathExpressionNotMeetRequirement(f"{quiz} doesn't meet the requirement.")
     
     return quiz
