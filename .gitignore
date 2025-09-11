@@ -120,3 +120,4 @@ dmypy.json
 # line profiler
 *.lprof
 bin
+.DS_Store
